@@ -1,5 +1,8 @@
 var server = require('express')()
 
+
+require('./models.js')
+
 server.get('/', (req, res) => {
     res.send('API ok')
 })

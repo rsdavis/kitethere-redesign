@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install eslint
+RUN npm install --save-dev eslint mocha supertest
 RUN npm install express body-parser boom mysql2 sequelize shortid uuid
 
 COPY ./ ./

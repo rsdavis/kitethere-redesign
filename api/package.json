@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/mocha/bin/mocha ./mount/test",
     "lint": "./node_modules/.bin/eslint ./mount/server/**/*.js",
     "dev": "./node_modules/.bin/nodemon -L ./mount/server/server.js --exec 'npm run lint && node'",
     "start": "node server/server.js"
@@ -14,7 +14,6 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "boom": "^7.2.0",
-    "eslint": "^5.4.0",
     "express": "^4.16.3",
     "mysql2": "^1.6.1",
     "sequelize": "^4.38.0",
@@ -22,6 +21,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "eslint": "^5.4.0",
     "nodemon": "^1.18.3"
   }
 }

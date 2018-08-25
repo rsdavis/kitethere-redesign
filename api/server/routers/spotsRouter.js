@@ -19,7 +19,7 @@ router.get('/spots', (req, res, next) => {
 router.post('/spots', (req, res, next) => {
 
     Spot.create(req.body)
-        .then(item => res.send(item))
+        .then(item => res.status(201).json(item))
         .catch(next)
 
 })
@@ -42,7 +42,7 @@ router.put('/spots/:id', (req, res, next) => {
 
 router.delete('/spots/:id', (req, res, next) => {
     Spot.rollback(req.params.id)
-        .then(item => res.send(item))
+        .then(item => res.status(204).send(item))
         .catch(next)
 })
 

@@ -4,7 +4,6 @@ const bodyParser = require('body-parser')
 
 server.use(bodyParser.json())
 
-
 server.use(require('./routers/spotsRouter.js'))
 
 server.use(require('./errorHandler.js'))

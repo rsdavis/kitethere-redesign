@@ -111,7 +111,6 @@ exports.getCurrentById = async function (id) {
 // create new version of spot that already exists
 exports.createNewVersion = async function (spotId, object) {
 
-
     const findOptions = {
         where: { id: spotId }
     }
@@ -120,7 +119,6 @@ exports.createNewVersion = async function (spotId, object) {
         include: [{ all: true, nested: true }]
     }
 
-    // create a new spot
     let spot = await Spot.findOne(findOptions)
     if (!spot) throw boom.notFound('Spot not found for id: ' + spotId)
 
@@ -136,9 +134,11 @@ exports.createNewVersion = async function (spotId, object) {
 }
 
 const sortByDate = (versions) => {
-    return versions.sort((a, b) => { return a.created < b.created })
+    return versions.sort((a, b) => { return a.created < b.created})
 }
 
+// remove the latest version and reset the current version id
+// if there is only one version, remove the spot
 exports.rollback = async function (id) {
 
     const deleteOptions = {
@@ -150,6 +150,10 @@ exports.rollback = async function (id) {
 
     let versions = await spot.getVersions()
     versions = sortByDate(versions)
+
+    versions.forEach(v => {
+        console.log(v.name, '\t', v.created)
+    })
 
     if (versions.length === 1) {
         await versions[0].destroy(deleteOptions)

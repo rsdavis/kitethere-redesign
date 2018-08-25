@@ -22,7 +22,7 @@ const Spot = sequelize.define('spots', {
 
 const Version = sequelize.define('versions', {
     id: { type: Sequelize.UUID, defaultValue: uuid, primaryKey: true, allowNull: false },
-    created: { type: Sequelize.DATE, defaultValue: Sequelize.NOW },
+    created: { type: Sequelize.DATE(3), defaultValue: Sequelize.NOW },
     name: Sequelize.STRING,
     lat: Sequelize.DOUBLE,
     lng: Sequelize.DOUBLE,

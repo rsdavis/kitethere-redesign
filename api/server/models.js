@@ -40,7 +40,7 @@ const Image = sequelize.define('images', {
 }, tableOptions)
 
 Spot.hasMany(Version, { foreignKey: 'spot_id' })
-Spot.belongsTo(Version, { as: 'CurrentVersion', constraints: false })
+Spot.belongsTo(Version, { foreignKey: 'current_version', as: 'CurrentVersion', constraints: false })
 
 Version.hasMany(Section)
 Version.hasMany(Image)

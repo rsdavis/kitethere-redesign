@@ -18,5 +18,4 @@ services:
       - "8000:8000"
 
     volumes:
-      - /Users/rsdavis/Desktop/kitethere/api:/app
-      - /app/node_modules
+      - /Users/rsdavis/Desktop/kitethere/api:/app/mount

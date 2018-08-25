@@ -1,7 +1,7 @@
 
 const boom = require('boom')
 
-const { sequelize, Spot, Version, Section, Image } = require('../models.js')
+const { Spot, Version, Section, Image } = require('../models.js')
 
 exports.create = async function (object) {
 
@@ -122,7 +122,7 @@ exports.createNewVersion = async function (spotId, object) {
 
     // create a new spot
     let spot = await Spot.findOne(findOptions)
-    if (!spot) throw boom.notFound('Spot not found for id: ' + id)
+    if (!spot) throw boom.notFound('Spot not found for id: ' + spotId)
 
     // save the document
     let version = await Version.create(object, options)
@@ -135,7 +135,7 @@ exports.createNewVersion = async function (spotId, object) {
 
 }
 
-sortByDate = (versions) => {
+const sortByDate = (versions) => {
     return versions.sort((a, b) => { return a.created < b.created })
 }
 

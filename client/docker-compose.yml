@@ -3,9 +3,16 @@ version: '3'
 
 services:
 
-  client:
+  dev:
+
+    command: ash
+
+    env_file: .env
 
     image: node:alpine
+
+    ports:
+    - 3000:3000
 
     working_dir: /app
 

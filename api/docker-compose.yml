@@ -2,20 +2,18 @@ version: '3'
 
 services:
 
-  api:
+  dev:
 
-    build: .
+    command: ash
 
-    command: npm run dev
-
-    container_name: kitethere-api
-    
     env_file: .env
-    
-    image: kitethere-api
-    
+
+    image: node:alpine
+
     ports:
       - "8000:8000"
 
+    working_dir: /app
+
     volumes:
-      - /Users/rsdavis/Desktop/kitethere/api:/app/mount
+      - /Users/rsdavis/Desktop/kitethere/api:/app

@@ -1,7 +1,7 @@
 
 const boom = require('boom')
 
-const { Spot, Version, Section, Image } = require('../models.js')
+const { Spot, Version, Section, Image, sequelize } = require('../models.js')
 
 exports.create = async function (object) {
 
@@ -26,7 +26,14 @@ exports.create = async function (object) {
 exports.getAllCurrent = async function () {
 
     const options = {
+
         attributes: [ 'id' ],
+
+        order: [
+          [ { model: Version, as: 'CurrentVersion'} , Image, 'index', 'ASC' ],
+          [ { model: Version, as: 'CurrentVersion'} , Section, 'index', 'ASC' ]
+        ],
+
         include: [
             {
                 model: Version,
@@ -35,11 +42,11 @@ exports.getAllCurrent = async function () {
                 include: [
                     { 
                         model: Section,
-                        attributes: [ 'heading', 'body']
+                        attributes: [ 'index', 'heading', 'body']
                     }, 
                     { 
                         model: Image,
-                        attributes: [ 'id' ] 
+                        attributes: [ 'id', 'index' ]
                     }
                 ]
             }
@@ -54,6 +61,12 @@ exports.getAllVersions = async function () {
 
     const options = {
         attributes: [ 'id' ],
+
+        order: [
+            [ Version, Image, 'index', 'ASC' ],
+            [ Version, Section, 'index', 'ASC' ]
+        ],
+
         include: [
             {
                 model: Version,
@@ -82,6 +95,12 @@ exports.getCurrentById = async function (id) {
     const options = {
         attributes: [ 'id' ],
         where: { id: id },
+        
+        order: [
+            [ { model: Version, as: 'CurrentVersion'} , Image, 'index', 'ASC' ],
+            [ { model: Version, as: 'CurrentVersion'} , Section, 'index', 'ASC' ]
+        ],
+
         include: [
             {
                 model: Version,
@@ -133,35 +152,28 @@ exports.createNewVersion = async function (spotId, object) {
 
 }
 
-const sortByDate = (versions) => {
-    return versions.sort((a, b) => { return a.created < b.created})
-}
-
 // remove the latest version and reset the current version id
 // if there is only one version, remove the spot
 exports.rollback = async function (id) {
+
+    const findOptions = {
+        where: { id: id },
+        order: [[ Version, 'created', 'DESC' ]],
+        include: [{ all: true, nested: true }]
+    }
 
     const deleteOptions = {
         include: [{ all: true, nested: true }]
     }
 
-    let spot = await Spot.findOne({where: {id: id}})
-    if (!spot) throw boom.notFound('Spot not found for id: ' + id)
+    let spot = await Spot.findOne(findOptions)
 
-    let versions = await spot.getVersions()
-    versions = sortByDate(versions)
-
-    versions.forEach(v => {
-        console.log(v.name, '\t', v.created)
-    })
-
-    if (versions.length === 1) {
-        await versions[0].destroy(deleteOptions)
+    if (spot.versions.length === 1) {
+        await spot.versions[0].destroy(deleteOptions)
         await spot.destroy()
     } else {
-        await versions[0].destroy(deleteOptions)
-        await spot.setCurrentVersion(versions[1])
+        await spot.versions[0].destroy(deleteOptions)
+        await spot.setCurrentVersion(spot.versions[1])
     }
 
-    return ''
 }

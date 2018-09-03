@@ -21,22 +21,31 @@ const Spot = sequelize.define('spots', {
 }, tableOptions)
 
 const Version = sequelize.define('versions', {
+
     id: { type: Sequelize.UUID, defaultValue: uuid, primaryKey: true, allowNull: false },
     created: { type: Sequelize.DATE(3), defaultValue: Sequelize.NOW },
     name: Sequelize.STRING,
     lat: Sequelize.DOUBLE,
     lng: Sequelize.DOUBLE,
     description: Sequelize.TEXT
+
 }, tableOptions)
 
 const Section = sequelize.define('sections', {
+
     id: { type: Sequelize.UUID, defaultValue: uuid, primaryKey: true, allowNull: false },
     heading: Sequelize.STRING,
-    body: Sequelize.TEXT
+    body: Sequelize.TEXT,
+    index: Sequelize.INTEGER
+
 }, tableOptions)
 
 const Image = sequelize.define('images', {
-    id: { type: Sequelize.UUID, defaultValue: uuid, primaryKey: true, allowNull: false }
+
+    id: { type: Sequelize.UUID, defaultValue: uuid, primaryKey: true, allowNull: false },
+    name: Sequelize.STRING,
+    index: Sequelize.INTEGER
+
 }, tableOptions)
 
 Spot.hasMany(Version, { foreignKey: 'spot_id' })
@@ -45,7 +54,7 @@ Spot.belongsTo(Version, { foreignKey: 'current_version', as: 'CurrentVersion', c
 Version.hasMany(Section)
 Version.hasMany(Image)
 
-sequelize.drop()
-sequelize.sync({ force: true })
+//sequelize.drop()
+sequelize.sync({ force: false })
 
 module.exports = { sequelize, Spot, Version, Section, Image }

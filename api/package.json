@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./mount/test",
-    "lint": "./node_modules/.bin/eslint ./mount/server/**/*.js",
-    "dev": "./node_modules/.bin/nodemon -L ./mount/server/server.js --exec 'npm run lint && node'",
+    "test": "./node_modules/mocha/bin/mocha ./test",
+    "lint": "./node_modules/.bin/eslint ./server/**/*.js",
+    "dev": "./node_modules/.bin/nodemon -L ./server/server.js --exec 'npm run lint && node'",
     "start": "node server/server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "boom": "^7.2.0",
     "express": "^4.16.3",
@@ -22,6 +23,8 @@
   },
   "devDependencies": {
     "eslint": "^5.4.0",
-    "nodemon": "^1.18.3"
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.3",
+    "supertest": "^3.1.0"
   }
 }

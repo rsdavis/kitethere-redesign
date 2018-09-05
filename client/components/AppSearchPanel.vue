@@ -1,7 +1,7 @@
 <template>
   <div class="panel">
-    <nuxt-link class="panel__link" v-for="spot in filtered" :key="spot.id" :to="'/spots/' + spot.spotID">
-    <div class="panel__item" :class="{'panel__item--selected': selection && spot.spotID === selection.spotID}">
+    <nuxt-link class="panel__link" v-for="spot in spotsInBounds" :key="spot.id" :to="'/spots/' + spot.id">
+    <div class="panel__item" :class="{'panel__item--selected': selection && spot.id === selection.id}">
       <div class="panel__item-left">
         <div class="panel__item-name">{{ spot.name }}</div>
         <div class="panel__item-description">{{ trim(spot.description) }}</div>
@@ -9,7 +9,7 @@
           <div class="panel__item-section" v-for="(sec, ndx) in spot.sections" :key="ndx">{{ sec.heading }}</div>
         </div>
       </div>
-      <div class="panel__item-right" v-if="spot.images.length > 0">
+      <div class="panel__item-right" v-if="spot.images.length > 0 && spot.images[0].url">
         <img :src="cloudify(spot.images[0].url)" />
       </div>
     </div>
@@ -20,22 +20,12 @@
 
 <script>
 export default {
+
   computed: {
-    collection () { return this.$store.getters['spots/collection'] },
-    selection () { return this.$store.getters['spots/selection'] },
-    bounds () { return this.$store.getters['map/bounds'] },
-    filtered () {
-      if (this.bounds === null) { return [] }
-      return this.collection.filter(spot => {
-        return (
-          spot.position.lat > this.bounds.southWest.lat &&
-          spot.position.lat < this.bounds.northEast.lat &&
-          spot.position.lng > this.bounds.southWest.lng &&
-          spot.position.lng < this.bounds.northEast.lng
-        )
-      })
-    }
+    selection () { return this.$store.getters['search/selectedSpot'] },
+    spotsInBounds () { return this.$store.getters['search/spotsInBounds'] }
   },
+
   methods: {
     cloudify (url) {
       var base = 'https://res.cloudinary.com/docvozwpw/image/fetch/'
@@ -43,10 +33,8 @@ export default {
       return base + transform + url
     },
     trim (text) {
-      return text.substring(0, 120) + '...'
-    },
-    spotPath (spotID) {
-      return '/spots/' + spotID
+      if (text) return text.substring(0, 120) + '...'
+      else return ''
     }
   },
   watch: {

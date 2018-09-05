@@ -6,6 +6,9 @@
         <AppSearchMap></AppSearchMap>
       </div>
 
+      <div class="search__panel">
+        <AppSearchPanel></AppSearchPanel>
+      </div>
     </div>
   </div>
 </template>
@@ -15,10 +18,11 @@
 import axios from 'axios'
 
 import AppSearchMap from '@/components/AppSearchMap.vue'
+import AppSearchPanel from '@/components/AppSearchPanel.vue'
 
 export default {
 
-  components: { AppSearchMap },
+  components: { AppSearchMap, AppSearchPanel },
 
   // the fetch function is called before loading the page
   // its used to fetch data and fill the store

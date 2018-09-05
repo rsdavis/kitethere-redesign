@@ -1,4 +1,16 @@
 
+
+function convertSchema (spot) {
+    return {
+        id: spot.id,
+        name: spot.CurrentVersion.name,
+        lat: spot.CurrentVersion.lat,
+        lng: spot.CurrentVersion.lng,
+        sections: spot.CurrentVersion.sections,
+        images: spot.CurrentVersion.images
+    }
+}
+
 export const state = () => ({
     spots: null,
 
@@ -16,12 +28,14 @@ export const getters = {
     // return array of objects with id, lat, lng, and name
     locations (state) {
 
-        return state.spots.reduce((acc, spot) => {
+        return state.spots
+            .map(convertSchema)
+            .reduce((acc, spot) => {
             acc.push({
                 id: spot.id,
-                lat: spot.CurrentVersion.lat,
-                lng: spot.CurrentVersion.lng,
-                name: spot.CurrentVersion.name
+                lat: spot.lat,
+                lng: spot.lng,
+                name: spot.name
             })
             return acc
         }, [])  
@@ -33,6 +47,17 @@ export const getters = {
 
         return (state.selectedSpotId !== null)
         
+    },
+
+    spotsInBounds (state) {
+    return state.spots.map(convertSchema).filter(spot => {
+        return (
+            spot.lat > state.mapBounds.southWest.lat &&
+            spot.lat < state.mapBounds.northEast.lat &&
+            spot.lng > state.mapBounds.southWest.lng &&
+            spot.lng < state.mapBounds.northEast.lng
+        )
+    })
     }
 
 }
@@ -40,8 +65,8 @@ export const getters = {
 export const mutations = {
 
     setSpots(state, spots) { state.spots = spots },
-    setCenter(state, center) { state.center = center },
-    setBounds(state, bounds) { state.bounds = bounds },
+    setCenter(state, center) { state.mapCenter = center },
+    setBounds(state, bounds) { state.mapBounds = bounds },
     selectSpot(state, id) { state.selectedSpotId = id }
 
 }

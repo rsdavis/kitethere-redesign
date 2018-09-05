@@ -60,7 +60,7 @@ describe('Spots', () => {
             request.get('/spots/'+spotId)
                 .expect(200)
                 .expect(res => {
-                    assert.equal(res.body.CurrentVersion.name, 'Spot5')
+                    assert.equal(res.body.current_version.name, 'Spot5')
                 })
                 .end(done)
         })
@@ -75,7 +75,7 @@ describe('Spots', () => {
             request.get('/spots/'+spotId)
                 .expect(200)
                 .expect(res => {
-                    assert.equal(res.body.CurrentVersion.name, 'Spot4')
+                    assert.equal(res.body.current_version.name, 'Spot4')
                 })
                 .end(done)
         })
@@ -90,7 +90,7 @@ describe('Spots', () => {
             request.get('/spots/'+spotId)
                 .expect(200)
                 .expect(res => {
-                    assert.equal(res.body.CurrentVersion.name, 'Spot3')
+                    assert.equal(res.body.current_version.name, 'Spot3')
                 })
                 .end(done)
         })
@@ -105,7 +105,7 @@ describe('Spots', () => {
             request.get('/spots/'+spotId)
                 .expect(200)
                 .expect(res => {
-                    assert.equal(res.body.CurrentVersion.name, 'Spot2')
+                    assert.equal(res.body.current_version.name, 'Spot2')
                 })
                 .end(done)
         })
@@ -120,7 +120,7 @@ describe('Spots', () => {
             request.get('/spots/'+spotId)
                 .expect(200)
                 .expect(res => {
-                    assert.equal(res.body.CurrentVersion.name, 'Spot1')
+                    assert.equal(res.body.current_version.name, 'Spot1')
                 })
                 .end(done)
         })

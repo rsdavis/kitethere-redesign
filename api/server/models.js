@@ -44,12 +44,18 @@ const Image = sequelize.define('images', {
 
     id: { type: Sequelize.UUID, defaultValue: uuid, primaryKey: true, allowNull: false },
     name: Sequelize.STRING,
-    index: Sequelize.INTEGER
+    index: Sequelize.INTEGER,
+    url: {
+        type: new Sequelize.VIRTUAL(Sequelize.STRING, ['name']),
+        get: function () {
+            return (process.env.AWS_S3_URL + this.get('name'))
+        }
+    }
 
 }, tableOptions)
 
 Spot.hasMany(Version, { foreignKey: 'spot_id' })
-Spot.belongsTo(Version, { foreignKey: 'current_version', as: 'CurrentVersion', constraints: false })
+Spot.Version = Spot.belongsTo(Version, { foreignKey: 'current_version_id', as: 'current', targetKey: 'id', constraints: false })
 
 Version.hasMany(Section)
 Version.hasMany(Image)

@@ -47,7 +47,7 @@ axios({
 
     axios({
       method: 'post',
-      url: 'http://172.18.0.3:8000/spots',
+      url: 'http://localhost:8000/spots',
       data: newSpot
     }).then(()=> {
       console.log('success')

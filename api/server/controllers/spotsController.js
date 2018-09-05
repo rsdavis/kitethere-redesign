@@ -17,7 +17,7 @@ exports.create = async function (object) {
 
     // associate the two
     await spot.addVersion(version)
-    await spot.setCurrentVersion(version)
+    await spot.setCurrent(version)
 
     return spot
 
@@ -30,23 +30,23 @@ exports.getAllCurrent = async function () {
         attributes: [ 'id' ],
 
         order: [
-          [ { model: Version, as: 'CurrentVersion'} , Image, 'index', 'ASC' ],
-          [ { model: Version, as: 'CurrentVersion'} , Section, 'index', 'ASC' ]
+          [ { model: Version, as: 'current'} , Image, 'index', 'ASC' ],
+          [ { model: Version, as: 'current'} , Section, 'index', 'ASC' ]
         ],
 
         include: [
             {
                 model: Version,
-                as: 'CurrentVersion',
+                as: 'current',
                 attributes: [ 'created', 'name', 'lat', 'lng', 'description' ],
                 include: [
                     { 
                         model: Section,
-                        attributes: [ 'index', 'heading', 'body']
+                        attributes: [ 'heading', 'body']
                     }, 
                     { 
                         model: Image,
-                        attributes: [ 'id', 'index' ]
+                        attributes: [ 'name', 'url' ]
                     }
                 ]
             }
@@ -78,7 +78,7 @@ exports.getAllVersions = async function () {
                     }, 
                     { 
                         model: Image,
-                        attributes: [ 'id' ] 
+                        attributes: [ 'name', 'url' ] 
                     }
                 ]
             }
@@ -97,14 +97,14 @@ exports.getCurrentById = async function (id) {
         where: { id: id },
         
         order: [
-            [ { model: Version, as: 'CurrentVersion'} , Image, 'index', 'ASC' ],
-            [ { model: Version, as: 'CurrentVersion'} , Section, 'index', 'ASC' ]
+            [ { model: Version, as: 'current'} , Image, 'index', 'ASC' ],
+            [ { model: Version, as: 'current'} , Section, 'index', 'ASC' ]
         ],
 
         include: [
             {
                 model: Version,
-                as: 'CurrentVersion',
+                as: 'current',
                 attributes: [ 'created', 'name', 'lat', 'lng', 'description' ],
                 include: [
                     { 
@@ -113,7 +113,7 @@ exports.getCurrentById = async function (id) {
                     }, 
                     { 
                         model: Image,
-                        attributes: [ 'id' ] 
+                        attributes: [ 'name', 'url' ] 
                     }
                 ]
             }
@@ -146,7 +146,7 @@ exports.createNewVersion = async function (spotId, object) {
 
     // associate the two
     await spot.addVersion(version)
-    await spot.setCurrentVersion(version)
+    await spot.setCurrent(version)
 
     return spot
 
@@ -173,7 +173,7 @@ exports.rollback = async function (id) {
         await spot.destroy()
     } else {
         await spot.versions[0].destroy(deleteOptions)
-        await spot.setCurrentVersion(spot.versions[1])
+        await spot.setCurrent(spot.versions[1])
     }
 
 }

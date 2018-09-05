@@ -1,44 +1,43 @@
+
 <template>
     <div id="gmap"></div>
 </template>
 
 <script>
+
+// this component controls only whats within the bounds
+// of the goolge map on the search page
+// the height of the map is set by the parent page 
+// the location info should already be loaded into the store
+
 import googleMapsAPI from '@/assets/google-maps-load.js'
+
 export default {
+
   data () {
     return {
       map: null,
-      markers: {},
-      mobile: false
+      markers: {}
     }
   },
+
   computed: {
-    selection () { return this.$store.getters['spots/selection'] },
-    collection () { return this.$store.getters['spots/collection'] },
-    squeezed () { return this.mobile && this.selection }
+    locations () { return this.$store.getters['search/locations'] }
   },
+
   mounted () {
+
     googleMapsAPI().then(() => {
       this.initMap()
       this.addMarkers()
     })
-    var mediaQuery = window.matchMedia("(max-width: 1000px)")
-    mediaQuery.addListener((match) => {
-      if (match.matches) this.mobile = true
-      else this.mobile = false
-    })
-    this.switchSqueezed(this.squeezed)
+
   },
-  watch: {
-    'squeezed' (squeezed) { this.switchSqueezed(squeezed) }
-  },
+
   methods: {
-    switchSqueezed (squeezed) {
-      var element = document.getElementById("gmap")
-      if (squeezed) element.classList.add("gmap--squeezed")
-      else element.classList.remove("gmap--squeezed")
-    },
+
     initMap () {
+
       const options = {
         zoom: 2,
         center: { 'lat': 10, 'lng': -50 },
@@ -48,14 +47,21 @@ export default {
       var element = document.getElementById('gmap')
       this.map = new window.google.maps.Map(element, options)
       this.map.addListener('bounds_changed', this.boundsChanged)
+
     },
+
+    // this is a map listener event
     boundsChanged () {
+
+      // query the google api
       var mapBounds = this.map.getBounds()
       var mapCenter = this.map.getCenter()
+
       var center = {
         'lat': mapCenter.lat(),
         'lng': mapCenter.lng()
       }
+
       var bounds = {
         'northEast': {
           'lat': mapBounds.getNorthEast().lat(),
@@ -66,33 +72,41 @@ export default {
           'lng': mapBounds.getSouthWest().lng()
         }
       }
-      this.$store.commit('map/setCenter', center)
-      this.$store.commit('map/setBounds', bounds)
+
+      this.$store.commit('search/setCenter', center)
+      this.$store.commit('search/setBounds', bounds)
     },
+
     addMarker (map, id, lat, lng, name) {
-      var args = {
+      var markerOptions = {
         'position': { 'lat': lat, 'lng': lng },
         'map': map
       }
-      var str = name
+
       var infoWindow = new google.maps.InfoWindow({
-        content: str,
+        content: name,
         disableAutoPan: true
       })
-      var marker = new window.google.maps.Marker(args)
-      var clickEvent = () => { this.$store.dispatch('spots/select', id) }
-      var mouseoverEvent = () => { infoWindow.open(this.map, marker) }
-      var mouseoutEvent = () => { infoWindow.close() }
+
+      var marker = new window.google.maps.Marker(markerOptions)
+
+      var clickEvent      = () => { this.$store.commit('search/selectSpot', id) }
+      var mouseoverEvent  = () => { infoWindow.open(this.map, marker) }
+      var mouseoutEvent   = () => { infoWindow.close() }
+
       marker.addListener('click', clickEvent)
       marker.addListener('mouseover', mouseoverEvent)
       marker.addListener('mouseout', mouseoutEvent)
+
       this.markers[id] = marker
     },
+
     addMarkers () {
-      this.collection.forEach(spot => {
-        this.addMarker(this.map, spot.spotID, spot.position.lat, spot.position.lng, spot.name)
+      this.locations.forEach(loc => {
+        this.addMarker(this.map, loc.id, loc.lat, loc.lng, loc.name)
       })
     }
+
   }
 }
 </script>

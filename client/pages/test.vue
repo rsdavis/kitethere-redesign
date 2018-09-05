@@ -7,15 +7,14 @@
 import axios from 'axios'
 
 export default {
-  fetch({ context, params }) {
+  asyncData(context) {
+    console.log('hello')
     axios({
       method: 'get',
-      url: 'http://172.18.0.2:8000/spots'
-    }).then(data => {
-      console.log(data)
-    }).catch(err => {
-      console.error(err)
-    })
+      url: 'http://api:8000'
+    }).then(response => {
+      console.log(response.data)
+    }).catch(err => console.log(err))
   }
 }
 </script>

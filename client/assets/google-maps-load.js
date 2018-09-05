@@ -11,7 +11,7 @@ export default function () {
     if (!document.getElementById('google-maps-api-script')) {
       const googleMapsApiScript = document.createElement('script')
       const base = 'https://maps.googleapis.com/maps/api/js'
-      const key = 'AIzaSyBS53xtPUY8qBBDbQdBQXJ_AytS0Kiuww0'
+      const key = 'AIzaSyDGcWysoKp-JR_7emQKDe9ArQtra-nLwPY'
       const callback = 'googleMapsApiCallback'
       const url = base + '?' + 'key=' + key + '&' + 'callback=' + callback
 

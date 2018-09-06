@@ -78,21 +78,21 @@ export default {
     },
 
     addMarker (map, id, lat, lng, name) {
-      var markerOptions = {
+      let markerOptions = {
         'position': { 'lat': lat, 'lng': lng },
         'map': map
       }
 
-      var infoWindow = new google.maps.InfoWindow({
+      let infoWindow = new google.maps.InfoWindow({
         content: name,
         disableAutoPan: true
       })
 
-      var marker = new window.google.maps.Marker(markerOptions)
+      let marker = new window.google.maps.Marker(markerOptions)
 
-      var clickEvent      = () => { this.$store.commit('search/selectSpot', id) }
-      var mouseoverEvent  = () => { infoWindow.open(this.map, marker) }
-      var mouseoutEvent   = () => { infoWindow.close() }
+      let clickEvent      = () => { this.$store.commit('search/selectSpot', id) }
+      let mouseoverEvent  = () => { infoWindow.open(this.map, marker) }
+      let mouseoutEvent   = () => { infoWindow.close() }
 
       marker.addListener('click', clickEvent)
       marker.addListener('mouseover', mouseoverEvent)

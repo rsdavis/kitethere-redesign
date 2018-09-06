@@ -6,9 +6,14 @@
         <AppSearchMap></AppSearchMap>
       </div>
 
-      <div class="search__panel">
+      <div class="search__panel" v-if="!this.mobile">
         <AppSearchPanel></AppSearchPanel>
       </div>
+
+      <div class="search__item" v-if="this.mapSqueezed">
+        <AppSearchPanelItem :spot="selectedSpot"></AppSearchPanelItem>
+      </div>
+
     </div>
   </div>
 </template>
@@ -19,10 +24,11 @@ import axios from 'axios'
 
 import AppSearchMap from '@/components/AppSearchMap.vue'
 import AppSearchPanel from '@/components/AppSearchPanel.vue'
+import AppSearchPanelItem from '@/components/AppSearchPanelItem.vue'
 
 export default {
 
-  components: { AppSearchMap, AppSearchPanel },
+  components: { AppSearchMap, AppSearchPanel, AppSearchPanelItem },
 
   // the fetch function is called before loading the page
   // its used to fetch data and fill the store
@@ -42,6 +48,7 @@ export default {
   },
 
   computed: {
+    selectedSpot () { return this.$store.getters['search/selectedSpot'] },
     spotSelected () { return this.$store.getters['search/spotSelected'] },
     mapSqueezed () { return this.mobile && this.spotSelected }
   },
@@ -98,7 +105,7 @@ export default {
 }
 
 .search__map--squeezed {
-  height: calc(100vh - 80px - 150px);
+  height: calc(100vh - 80px - 160px);
 }
 
 @media only screen and (min-width: 1000px) {
@@ -107,18 +114,13 @@ export default {
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
   }
-  .search__item {
-    display: none;
-  }
 }
 
 @media only screen and (max-width: 1000px) {
   .search__content {
     display: grid;
-    grid-template-rows: calc(100vh - 80px - 150px) 150px;
-  }
-  .search__panel {
-    display: none;
+    grid-template-rows: calc(100vh - 80px - 160px) 160px;
+    align-items: center;
   }
 }
 

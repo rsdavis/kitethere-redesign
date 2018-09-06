@@ -3,11 +3,12 @@
 function convertSchema (spot) {
     return {
         id: spot.id,
-        name: spot.CurrentVersion.name,
-        lat: spot.CurrentVersion.lat,
-        lng: spot.CurrentVersion.lng,
-        sections: spot.CurrentVersion.sections,
-        images: spot.CurrentVersion.images
+        name: spot.current.name,
+        lat: spot.current.lat,
+        lng: spot.current.lng,
+        description: spot.current.description,
+        sections: spot.current.sections,
+        images: spot.current.images
     }
 }
 
@@ -44,9 +45,13 @@ export const getters = {
 
     // returns true if a spot is selected, false otherwise
     spotSelected (state) {
-
         return (state.selectedSpotId !== null)
-        
+    },
+
+    selectedSpot (state) {
+        return state.spots.map(convertSchema).find(spot => { 
+            return (spot.id === state.selectedSpotId) 
+        })
     },
 
     spotsInBounds (state) {

@@ -40,10 +40,14 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios'
+    '@nuxtjs/proxy'
     // Doc: https://buefy.github.io/#/documentation
     //'nuxt-buefy'
   ],
+
+  proxy: {
+    '/spots': 'http://api:8000'
+  },
   /*
   ** Axios module configuration
   */

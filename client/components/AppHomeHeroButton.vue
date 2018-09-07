@@ -1,11 +1,11 @@
 
 <template>
-  <nuxt-link class="hero__button" to="/map">
+  <div class="hero__button">
     <div class="hero__button-icon">
       <font-awesome-icon :icon="icon" size="lg"></font-awesome-icon>
     </div>
     <div class="hero__button-text">{{ text }}</div>
-  </nuxt-link>
+  </div>
 </template>
 
 <script>

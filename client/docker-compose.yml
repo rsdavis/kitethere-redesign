@@ -7,6 +7,9 @@ services:
 
     command: ash
 
+    depends_on:
+    - api
+
     env_file: .env
 
     image: node:alpine
@@ -18,3 +21,12 @@ services:
 
     volumes:
       - /Users/rsdavis/Desktop/kitethere/client:/app
+
+  api:
+
+    env_file: .env.api
+
+    image: kitethere-api
+
+    ports:
+    - "8000:8000"

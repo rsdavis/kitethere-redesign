@@ -34,11 +34,15 @@ export default {
   // its used to fetch data and fill the store
   async fetch ({ store, params }) {
     
-    let response = await axios.get(process.env.API_URL + '/spots')
-    let spots = response.data
+    try {
 
-    await store.commit('search/setSpots', spots)
+      let response = await axios.get('http://localhost:3000/spots') 
+      await store.commit('search/setSpots', response.data)
 
+    } catch (err) {
+      console.error(err)
+    }
+    
   },
 
   data () {
@@ -54,7 +58,7 @@ export default {
   },
 
   mounted () {
-
+    console.log('mounted')
     // add media query listener and call immediately
     var mediaQuery = window.matchMedia("(max-width: 1000px)")
     mediaQuery.addListener(this.mediaListener)

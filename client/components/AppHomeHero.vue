@@ -9,8 +9,12 @@
       <div class="hero__message">
         <h1 class="hero__title">Kite Spot Repository</h1>
         <p>KiteThere is mapping out the globe, one spot at a time.</p>
+
         <div class="hero__controls">
-          <AppHomeHeroButton :icon="faGlobe" :text="'Go To Map'"></AppHomeHeroButton>
+          <nuxt-link to="/map">
+            <AppHomeHeroButton :icon="faGlobe" :text="'Go To Map'"></AppHomeHeroButton>
+          </nuxt-link>
+
           <AppHomeHeroButton :icon="faMapMarkerAlt" :text="'Add A Spot'"></AppHomeHeroButton>
         </div>
       </div>

@@ -1,8 +1,10 @@
 <template>
   <div class="panel">
-    <nuxt-link class="panel__link" v-for="spot in ordered" :key="spot.id" :to="'/spots/' + spot.id">
-      <AppSearchPanelItem :spot="spot"/>
-    </nuxt-link>
+    <div v-for="spot in ordered" :key="spot.id">
+      <nuxt-link class="panel__link"  :to="'/spots/' + spot.id">
+        <AppSearchPanelItem :spot="spot"/>
+      </nuxt-link>
+    </div>
   </div>
 </template>
 

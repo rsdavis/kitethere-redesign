@@ -18,7 +18,7 @@ describe('Spots', () => {
                 'name': name
             }
 
-            request.put('/spots/' + id)
+            request.put('/api/spots/' + id)
                 .set('Accept', 'application/json')
                 .send(data)
                 .expect(200)
@@ -31,7 +31,7 @@ describe('Spots', () => {
                 'name': 'Spot1'
             }
 
-            request.post('/spots')
+            request.post('/api/spots')
                 .set('Accept', 'application/json')
                 .send(data)
                 .expect(201)
@@ -57,7 +57,7 @@ describe('Spots', () => {
         })
 
         it ('Get Version 5', (done) => {
-            request.get('/spots/'+spotId)
+            request.get('/api/spots/'+spotId)
                 .expect(200)
                 .expect(res => {
                     assert.equal(res.body.current_version.name, 'Spot5')
@@ -66,13 +66,13 @@ describe('Spots', () => {
         })
 
         it ('Rollback', (done) => {
-            request.delete('/spots/'+spotId)
+            request.delete('/api/spots/'+spotId)
                 .expect(204)
                 .end(done)
         })
 
         it ('Get Version 4', (done) => {
-            request.get('/spots/'+spotId)
+            request.get('/api/spots/'+spotId)
                 .expect(200)
                 .expect(res => {
                     assert.equal(res.body.current_version.name, 'Spot4')
@@ -81,13 +81,13 @@ describe('Spots', () => {
         })
 
         it ('Rollback', (done) => {
-            request.delete('/spots/'+spotId)
+            request.delete('/api/spots/'+spotId)
                 .expect(204)
                 .end(done)
         })
 
         it ('Get Version 3', (done) => {
-            request.get('/spots/'+spotId)
+            request.get('/api/spots/'+spotId)
                 .expect(200)
                 .expect(res => {
                     assert.equal(res.body.current_version.name, 'Spot3')
@@ -96,13 +96,13 @@ describe('Spots', () => {
         })
 
         it ('Rollback', (done) => {
-            request.delete('/spots/'+spotId)
+            request.delete('/api/spots/'+spotId)
                 .expect(204)
                 .end(done)
         })
 
         it ('Get Version 2', (done) => {
-            request.get('/spots/'+spotId)
+            request.get('/api/spots/'+spotId)
                 .expect(200)
                 .expect(res => {
                     assert.equal(res.body.current_version.name, 'Spot2')
@@ -111,13 +111,13 @@ describe('Spots', () => {
         })
 
         it ('Rollback', (done) => {
-            request.delete('/spots/'+spotId)
+            request.delete('/api/spots/'+spotId)
                 .expect(204)
                 .end(done)
         })
 
         it ('Get Version 1', (done) => {
-            request.get('/spots/'+spotId)
+            request.get('/api/spots/'+spotId)
                 .expect(200)
                 .expect(res => {
                     assert.equal(res.body.current_version.name, 'Spot1')
@@ -126,13 +126,13 @@ describe('Spots', () => {
         })
 
         it ('Rollback', (done) => {
-            request.delete('/spots/'+spotId)
+            request.delete('/api/spots/'+spotId)
                 .expect(204)
                 .end(done)
         })
 
         it ('Nothing left', (done) => {
-            request.get('/spots/'+spotId)
+            request.get('/api/spots/'+spotId)
                 .expect(404)
                 .end(done)
         })

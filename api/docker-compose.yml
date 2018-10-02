@@ -2,18 +2,46 @@ version: '3'
 
 services:
 
-  kitethere-api-dev:
-
+  dev:
     command: ash
-
-    env_file: .env
-
     image: node:alpine
-
-    ports:
-      - "8000:8000"
-
+    networks: [ kite-net ]
+    ports: [ "8000:8000" ]
     working_dir: /app
+    volumes: [ ".:/app" ]
 
-    volumes:
-      - /Users/rsdavis/Desktop/kitethere/api:/app
+  api:
+    build: .
+    depends_on: [ db ]
+    environment: 
+    - DB_HOST=db
+    - DB_NAME=kitethere
+    - DB_USERNAME=user
+    - DB_PASSWORD=pass
+    - DB_DIALECT=postgres
+    - AWS_S3_URL=https://kitethere.s3.amazonaws.com/images/
+
+    expose: [ "8000" ]
+    networks: [ kite-net ]
+
+  test:
+    command: npx mocha
+    depends_on: [ api ]
+    environment: [ "TEST_API=http://api:8000" ]
+    image: node:alpine
+    networks: [ kite-net ]
+    volumes: [ ".:/app" ]
+    working_dir: /app
+    
+  db:
+    environment: 
+    - POSTGRES_USER=user
+    - POSTGRES_PASSWORD=pass
+    - POSTGRES_DB=kitethere
+    image: postgres
+    networks: [ kite-net ]
+
+
+networks:
+    kite-net:
+        driver: bridge

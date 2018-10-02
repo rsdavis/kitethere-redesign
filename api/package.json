@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./test",
-    "lint": "./node_modules/.bin/eslint ./server/**/*.js",
-    "dev": "./node_modules/.bin/nodemon -L ./server/server.js --exec 'npm run lint && node'",
-    "start": "node server/server.js"
+    "lint": "./node_modules/.bin/eslint './src/*.js'",
+    "dev": "npx nodemon -L ./src/index.js --exec 'npm run lint && node'",
+    "start": "node src/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,14 +16,31 @@
     "boom": "^7.2.0",
     "express": "^4.16.3",
     "mysql2": "^1.6.1",
+    "pg": "^7.4.3",
     "sequelize": "^4.38.0",
     "shortid": "^2.2.13",
-    "uuid": "^3.3.2"
+    "sqlite3": "^4.0.2",
+    "uuid": "^3.3.2",
+    "async-retry": "^1.2.3"
   },
   "devDependencies": {
     "eslint": "^5.4.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.3",
-    "supertest": "^3.1.0"
+    "supertest": "^3.3.0"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parserOptions": {
+      "ecmaVersion": 2017
+    },
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "rules": {
+      "no-console": "warn",
+      "no-unused-vars": "warn"
+    }
   }
 }

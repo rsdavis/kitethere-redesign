@@ -2,25 +2,17 @@
 const Sequelize = require('sequelize')
 const uuid = require('uuid/v4')
 const shortid = require('shortid')
+const database = require('./database.js')
 shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@')
 
 const tableOptions = { underscored: true, timestamps: false, freezeTableName: true }
 
-const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USERNAME,
-    process.env.DB_PASSWORD, 
-    {
-        host: process.env.DB_HOST,
-        dialect: process.env.DB_DIALECT
-    }
-)
 
-const Spot = sequelize.define('spots', {
+const Spot = database.sequelize.define('spots', {
     id: { type: Sequelize.STRING, defaultValue: shortid.generate, primaryKey: true }
 }, tableOptions)
 
-const Version = sequelize.define('versions', {
+const Version = database.sequelize.define('versions', {
 
     id: { type: Sequelize.UUID, defaultValue: uuid, primaryKey: true, allowNull: false },
     created: { type: Sequelize.DATE(3), defaultValue: Sequelize.NOW },
@@ -31,7 +23,7 @@ const Version = sequelize.define('versions', {
 
 }, tableOptions)
 
-const Section = sequelize.define('sections', {
+const Section = database.sequelize.define('sections', {
 
     id: { type: Sequelize.UUID, defaultValue: uuid, primaryKey: true, allowNull: false },
     heading: Sequelize.STRING,
@@ -40,7 +32,7 @@ const Section = sequelize.define('sections', {
 
 }, tableOptions)
 
-const Image = sequelize.define('images', {
+const Image = database.sequelize.define('images', {
 
     id: { type: Sequelize.UUID, defaultValue: uuid, primaryKey: true, allowNull: false },
     name: Sequelize.STRING,
@@ -61,6 +53,6 @@ Version.hasMany(Section)
 Version.hasMany(Image)
 
 //sequelize.drop()
-sequelize.sync({ force: false })
+database.sequelize.sync({ force: false })
 
-module.exports = { sequelize, Spot, Version, Section, Image }
+module.exports = { Spot, Version, Section, Image }

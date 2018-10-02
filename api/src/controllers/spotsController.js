@@ -1,7 +1,7 @@
 
 const boom = require('boom')
 
-const { Spot, Version, Section, Image, sequelize } = require('../models.js')
+const { Spot, Version, Section, Image, sequelize } = require('../database/models.js')
 
 exports.create = async function (object) {
 

@@ -21,7 +21,7 @@ services:
     - DB_DIALECT=postgres
     - AWS_S3_URL=https://kitethere.s3.amazonaws.com/images/
 
-    expose: [ "8000" ]
+    ports: [ "8000:8000" ]
     networks: [ kite-net ]
 
   test:

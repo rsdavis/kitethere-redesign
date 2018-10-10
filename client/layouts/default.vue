@@ -32,4 +32,9 @@ html {
   margin: 0;
   padding: 0;
 }
+
+a, a:link, a:visited, a:focus, a:hover, a:active {
+  text-decoration: none;
+}
+
 </style>

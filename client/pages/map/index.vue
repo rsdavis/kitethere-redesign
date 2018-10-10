@@ -36,10 +36,10 @@ export default {
     
     try {
 
-      let response = await axios.get('http://localhost:3000/spots') 
+      let response = await axios.get('http://localhost:3000/api/spots') 
       await store.commit('search/setSpots', response.data)
 
-    } catch (err) {
+  } catch (err) {
       console.error(err)
     }
     
@@ -58,7 +58,6 @@ export default {
   },
 
   mounted () {
-    console.log('mounted')
     // add media query listener and call immediately
     var mediaQuery = window.matchMedia("(max-width: 1000px)")
     mediaQuery.addListener(this.mediaListener)

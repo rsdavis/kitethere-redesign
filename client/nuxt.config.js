@@ -46,7 +46,7 @@ module.exports = {
   ],
 
   proxy: {
-    '/spots': 'http://api:8000'
+    '/api': 'http://host.docker.internal:8000'
   },
   /*
   ** Axios module configuration

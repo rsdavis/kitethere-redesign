@@ -115,5 +115,9 @@ export default {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-gap: 20px;
   }
+  .hero__controls a {
+    text-decoration: none;
+  }
+
 }
 </style>

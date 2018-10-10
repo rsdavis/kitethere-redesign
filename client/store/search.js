@@ -13,7 +13,7 @@ function convertSchema (spot) {
 }
 
 export const state = () => ({
-    spots: null,
+    spots: [],
 
     selectedSpotId: null,
     mapCenter: { lat: null, lng: null },

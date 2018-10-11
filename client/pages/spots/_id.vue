@@ -10,12 +10,27 @@
           <div class="spot__description">{{ spot.current.description }}</div>
         </div>
 
+        <div class="spot__images">
+          <div class="spot__image" v-for="(img, ndx) in spot.current.images" :key="ndx">
+            <img :src="cloudify(img.url)" @click="() => onClickImage(ndx)">
+          </div>
+        </div>
+
         <div class="spot__section" v-for="(sec, ndx) in spot.current.sections" :key="ndx">
           <div class="spot__section-heading">{{ sec.heading }}</div>
           <div class="spot__section-body">{{ sec.body }}</div>
         </div>
       </div>
     </div>
+
+    <AppSpotLightBox 
+      :init="lightboxInit" 
+      :active.sync="lightboxActive" 
+      :urls="lightboxURLs"
+    >
+    </AppSpotLightBox>
+
+
   </div>
 </template>
 
@@ -24,7 +39,16 @@
 import axios from 'axios'
 import googleMapsApi from '@/assets/google-maps-load.js'
 
+import AppSpotLightBox from '@/components/AppSpotLightBox.vue'
+
 export default {
+
+  data () {
+    return {
+      lightboxActive: false,
+      lightboxInit: 0
+    }
+  },
 
   async asyncData ({ params, env }) {
 
@@ -40,8 +64,18 @@ export default {
 
   },
 
+  components: { AppSpotLightBox },
+
   mounted () {
     googleMapsApi().then(this.initMap)
+  },
+
+  computed: {
+    lightboxURLs () {
+      let base = 'https://res.cloudinary.com/docvozwpw/image/fetch/'
+      let transform = 'w_720,c_fill,q_auto/'
+      return this.spot.current.images.map(img => base+transform+img.url)
+    }
   },
 
   methods: {
@@ -69,6 +103,17 @@ export default {
       
       let marker = new window.google.maps.Marker(markerOptions)
 
+    },
+
+    cloudify (url) {
+      var base = 'https://res.cloudinary.com/docvozwpw/image/fetch/'
+      var transform = 'h_250,c_fill,q_auto/'
+      return base + transform + url
+    },
+
+    onClickImage (ndx) {
+      this.lightboxInit = ndx
+      this.lightboxActive = true
     }
 
   }
@@ -105,11 +150,31 @@ export default {
   align-content: start;
   padding-top: 15px;
 }
+
 .spot__hero {
 }
+
 .spot__name {
   font-size: 42px;
 }
+
+.spot__images {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.spot__image {
+  height: 250px;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.spot__image:hover {
+  cursor: pointer;
+}
+
 .spot__description{
   font-size: 20px;
 }

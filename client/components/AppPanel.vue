@@ -5,7 +5,7 @@
       <font-awesome-icon v-if="visible" class="panel__icon" :icon="faAngleUp" size="2x"/>
       <font-awesome-icon v-if="!visible" class="panel__icon" :icon="faAngleDown" size="2x"/>
     </div>
-    <div class="panel__body" v-if="visible">
+    <div class="panel__body" v-show="visible">
       <slot></slot>
     </div>
   </div>
@@ -48,5 +48,9 @@ export default {
 
 .panel__header:hover {
   cursor: pointer;
+}
+
+.panel__body {
+  width: 100%;
 }
 </style>

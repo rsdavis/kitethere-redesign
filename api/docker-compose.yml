@@ -4,6 +4,7 @@ services:
 
   dev:
     command: ash
+    env_file: .env
     image: node:alpine
     networks: [ kite-net ]
     ports: [ "8000:8000" ]

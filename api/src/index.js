@@ -6,9 +6,14 @@ const server = require('./server.js')
 
 const main = async function () {
 
-    await database.setup(settings);
+    try {
+        await database.setup(settings);
 
-    await server.setup(settings);
+        await server.setup(settings);
+    } catch (e) {
+        console.log('Error thrown while setting up')
+        console.log(e)
+    }
     
 }
 

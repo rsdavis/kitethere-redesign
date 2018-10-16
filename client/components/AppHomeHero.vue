@@ -15,7 +15,9 @@
             <AppHomeHeroButton :icon="faGlobe" :text="'Go To Map'"></AppHomeHeroButton>
           </nuxt-link>
 
-          <AppHomeHeroButton :icon="faMapMarkerAlt" :text="'Add A Spot'"></AppHomeHeroButton>
+          <nuxt-link to="/edit">
+            <AppHomeHeroButton :icon="faMapMarkerAlt" :text="'Add A Spot'"></AppHomeHeroButton>
+          </nuxt-link>
         </div>
       </div>
 

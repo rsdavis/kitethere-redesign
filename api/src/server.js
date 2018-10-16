@@ -19,7 +19,8 @@ Server.prototype.setup = function (settings) {
         this.server.use(bodyParser.json())
     
         this.server.use('/api', require('./routers/spotsRouter.js'))
-        
+        this.server.use('/api', require('./routers/authRouter.js'))
+
         this.server.use(require('./handlers/errorHandler.js'))
         
         this.server.get('/', (req, res) => {

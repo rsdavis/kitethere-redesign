@@ -13,7 +13,7 @@ function Database () {
 
 Database.prototype.setup = async function (settings) {
 
-    assert(settings.DB_USERNAME,    'DB_NAME not provided')
+    assert(settings.DB_NAME,    'DB_NAME not provided')
     assert(settings.DB_DIALECT, 'DB_DIALECT not provided')
 
     logger.log('Connecting to database: ' + settings.DB_DIALECT)

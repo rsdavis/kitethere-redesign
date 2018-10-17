@@ -69,17 +69,19 @@
 
         <Panel header="Images">
           <input id="uploader__input" type="file" @change="onChangeInput($event)">
+
           <div class="uploader" :class="{'uploader--uploading': mixinUploader_uploading}">
             <div class="uploader__item" v-for="(img,ndx) in mixinUploader_images" :key="ndx" @click="onClickItem(ndx)">
               <img class="uploader__image" v-bind:src="cloudify(img.url)">
               <div class="uploader__overlay">Remove</div>
             </div>
+
+            <div class="btn" @click="onClickLabel" :disabled="mixinUploader_uploading">
+              <font-awesome-icon v-if="mixinUploader_uploading" :icon="faSpinner" spin size='2x'/>
+              <span v-if="!mixinUploader_uploading">Upload Photo</span>
+            </div>
           </div>
 
-          <button class="btn" @click="onClickLabel" :disabled="mixinUploader_uploading">
-            <font-awesome-icon v-if="mixinUploader_uploading" :icon="faSpinner" spin size='lg'/>
-            <span v-if="!mixinUploader_uploading">Upload Photo</span>
-          </button>
         </Panel>
 
     </div>
@@ -438,11 +440,19 @@ export default {
 }
 
 .btn {
-  width: 100px;
-  height: 50px;
   padding: 10px;
-  border: 1px #ccc solid;
+  background-color: white;
   border-radius: 5px;
+  font-size: 18px;
+  border: 1px solid rgb(200, 200, 200);
+
+  height: var(--item-size);
+  display: grid;
+  grid-template-columns: 1;
+  grid-template-rows: 1;
+  align-items: center;
+  text-align: center;
+  justify-items: center;
 }
 
 .btn:hover {

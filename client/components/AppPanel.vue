@@ -1,6 +1,6 @@
 <template>
   <div class="panel">
-    <div class="panel__header" @click="visible = !visible">
+    <div class="panel__header" :class="{'panel__header-open': visible, 'panel__header-closed': !visible}" @click="visible = !visible">
       <h2>{{ header }}</h2>
       <font-awesome-icon v-if="visible" class="panel__icon" :icon="faAngleUp" size="2x"/>
       <font-awesome-icon v-if="!visible" class="panel__icon" :icon="faAngleDown" size="2x"/>
@@ -37,13 +37,21 @@ export default {
 
 <style>
 .panel__header {
-  background-color: rgb(116, 190, 170);
+  background-color: var(--dark-blue);
   color: white;
   line-height: 80px;
-  padding-left: 10px;
+  padding-left: 20px;
   display: grid;
   grid-template-columns: auto 50px;
   align-items: center;
+}
+
+.panel__header-closed {
+  border-radius: 10px;
+}
+
+.panel__header-open {
+  border-radius: 10px 10px 0 0;
 }
 
 .panel__header:hover {
@@ -51,6 +59,9 @@ export default {
 }
 
 .panel__body {
+  border: 2px solid var(--dark-blue);
+  border-radius: 0 0 10px 10px;
+  padding: 20px;
   width: 100%;
 }
 </style>

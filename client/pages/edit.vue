@@ -2,7 +2,7 @@
   <div class="edit">
 
     <div  class="edit__panels">
-        <Panel header="Location">
+        <Panel header="LOCATION" :check="checks.location">
           <div class="edit-location">
             <div id="edit-gmap"></div>
             <div class="edit-location__coordinates">
@@ -20,7 +20,7 @@
           </div>
         </Panel>
 
-        <Panel header="Basic Info">
+        <Panel header="DESCRIPTION" :check="checks.description">
           <div class="edit-info">
 
             <div class="edit-info__label">Spot Name</div>
@@ -34,7 +34,7 @@
           </div>
         </Panel>
 
-        <Panel header="Content">
+        <Panel header="CONTENT" :check="checks.content">
 
           Consider adding some sections with more specific information about the spot.
         
@@ -62,12 +62,12 @@
             <div class="edit-sections__section-control" @click="() => onClickTrash(ndx)">
               <font-awesome-icon :icon="faTrashAlt" size="lg"></font-awesome-icon>
             </div>
-            <textarea class="edit-sections__section-body edit__textarea" placeholder="Section Body"></textarea>
+            <textarea class="edit-sections__section-body edit__textarea" v-model="sec.body" placeholder="Section Body"></textarea>
           </div>
 
         </Panel>
 
-        <Panel header="Images">
+        <Panel header="IMAGES" :check="checks.images">
           <input id="uploader__input" type="file" @change="onChangeInput($event)">
 
           <div class="uploader" :class="{'uploader--uploading': mixinUploader_uploading}">
@@ -84,6 +84,12 @@
 
         </Panel>
 
+      <div class="edit__controls">
+        <div class="edit__control-button">RESET</div>
+        <div class="edit__control-button">CANCEL</div>
+        <div></div>
+        <div class="edit__control-button">SUBMIT</div>
+      </div>
     </div>
 
   </div>
@@ -125,6 +131,15 @@ export default {
   },
 
   computed: {
+
+    checks () {
+      let loc = this.spot.lat && this.spot.lng
+      let des = this.spot.name.length && this.spot.description.length
+      let con = this.spot.sections.every(s => s.heading.length && s.body.length)
+      let img = !this.mixinUploader_uploading
+      let checks = { location: loc, description: des, content: con, images: img }
+      return checks
+    },
 
     suggested () { 
       let headings = this.spot.sections.map(s => s.heading)
@@ -459,4 +474,25 @@ export default {
   cursor: pointer;
 }
 
+.edit__controls {
+  display: grid;
+  grid-template-columns: 150px 150px 1fr 150px;
+  grid-gap: 5px;
+}
+
+.edit__control-button {
+  height: 80px;
+  line-height: 80px;
+  font-size: 18px;
+  border: 2px solid var(--dark-blue);
+  border-radius: 10px;
+  text-align: center;
+  background-color: white;
+}
+
+.edit__control-button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: var(--dark-blue);
+}
 </style>

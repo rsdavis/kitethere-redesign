@@ -85,10 +85,13 @@
         </Panel>
 
       <div class="edit__controls">
-        <div class="edit__control-button">RESET</div>
-        <div class="edit__control-button">CANCEL</div>
+        <div class="edit__control-button" @click="onClickReset">RESET</div>
+        <div class="edit__control-button" @click="onClickCancel">CANCEL</div>
         <div></div>
-        <div class="edit__control-button">SUBMIT</div>
+        <button class="edit__control-button" @click="onClickSubmit" :disabled="!validated">
+          <font-awesome-icon v-if="submitting" :icon="faSpinner" spin size='2x'/>
+          <span v-if="!submitting">SUBMIT</span>
+        </button>
       </div>
     </div>
 
@@ -109,6 +112,7 @@ import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner'
 import mixinUploader from '@/components/MixinUploader.vue'
 
 import Vue from 'vue'
+import axios from 'axios'
 
 export default {
   components: { Panel, FontAwesomeIcon },
@@ -126,19 +130,28 @@ export default {
 
       suggestedSections: [ "Getting There", "Launching", "Wind", "Precautions", "Custom" ],
       map: null,
-      marker: null
+      marker: null,
+      submitting: false
+
     }
   },
 
   computed: {
 
     checks () {
-      let loc = this.spot.lat && this.spot.lng
-      let des = this.spot.name.length && this.spot.description.length
-      let con = this.spot.sections.every(s => s.heading.length && s.body.length)
+      let loc = this.spot.lat!==null && this.spot.lng!==null
+      let des = this.spot.name.length>0 && this.spot.description.length>0
+      let con = this.spot.sections.every(s => s.heading.length>0 && s.body.length>0)
       let img = !this.mixinUploader_uploading
       let checks = { location: loc, description: des, content: con, images: img }
       return checks
+    },
+
+    validated () {
+      for (let key in this.checks) {
+        if (!this.checks[key]) return false
+      }
+      return true
     },
 
     suggested () { 
@@ -235,6 +248,44 @@ export default {
       if (this.uploading) return
       document.getElementById('uploader__input').click()
     },
+
+    onClickReset () {
+      this.spot = {
+        name: '',
+        description: '',
+        lat: null,
+        lng: null,
+        sections: []
+      }
+      if (this.marker) {
+        this.marker.setMap(null)
+        this.marker = null
+      }
+
+      this.mixinUploader_images = []
+    },
+
+    onClickCancel () {
+      this.$router.back()
+    },
+
+    onClickSubmit() {
+
+      this.submitting = true
+      this.spot.images = this.mixinUploader_images.map(img => ({ name: img.name }))
+    
+      axios({
+        url: 'http://localhost:3000/api/spots',
+        method: 'post',
+        data: this.spot
+      }).then(response => {
+        this.submitting = false
+        this.$router.push('/spots/' + response.data.id)
+      }).catch(error => {
+        this.submitting = false
+      })
+
+    }
 
   }
 }
@@ -476,7 +527,7 @@ export default {
 
 .edit__controls {
   display: grid;
-  grid-template-columns: 150px 150px 1fr 150px;
+  grid-template-columns: 105px 105px 1fr 105px;
   grid-gap: 5px;
 }
 
@@ -494,5 +545,9 @@ export default {
   cursor: pointer;
   color: white;
   background-color: var(--dark-blue);
+}
+
+.edit__control-button:disabled {
+  cursor: not-allowed;
 }
 </style>

@@ -24,6 +24,7 @@ export default {
   grid-template-columns: 60px 1fr;
   grid-template-rows: 60px;
   box-sizing: border-box;
+  border-radius: 5px;
 }
 .hero__button-icon {
   background-color: var(--dark-blue);

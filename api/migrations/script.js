@@ -35,7 +35,7 @@ function convertSpot (old) {
 axios({
 
   method: 'get',
-  url: 'https://www.kitethere.com/api/spots'
+  url: 'https://salty-sands-89752.herokuapp.com/api/spots'
 
 }).then(response => {
 
@@ -47,7 +47,7 @@ axios({
 
     axios({
       method: 'post',
-      url: 'http://localhost:8000/api/spots',
+      url: 'http://18.232.177.21:8000/api/spots',
       data: newSpot
     }).then(()=> {
       console.log('success')

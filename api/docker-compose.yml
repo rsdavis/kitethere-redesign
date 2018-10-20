@@ -25,6 +25,17 @@ services:
     ports: [ "8000:8000" ]
     networks: [ kite-net ]
 
+  rds:
+    build: .
+    environment:
+    - DB_HOST=postgresqlinstance.ciinv6runthn.us-east-1.rds.amazonaws.com
+    - DB_NAME=kitethere-staging
+    - DB_USERNAME=master
+    - DB_PASSWORD=rqmtgfyw
+    - DB_DIALECT=postgres
+    - AWS_S3_URL=https://kitethere.s3.amazonaws.com/images/
+    ports: [ "8000:8000" ]
+
   test:
     command: npx mocha
     depends_on: [ api ]

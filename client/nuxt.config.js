@@ -46,7 +46,7 @@ module.exports = {
   ],
 
   proxy: {
-    '/api': 'http://host.docker.internal:8000'
+    '/api': 'http://kitethere-api:8000'
   },
   /*
   ** Axios module configuration

@@ -1,0 +1,24 @@
+
+version: '3'
+
+services:
+
+  kitethere-api:
+
+    build: api/.
+    env_file: .env
+    networks: [ kite-net ]
+    ports: [ "8000:8000" ]
+
+  kitethere-client:
+
+    build: client/.
+    depends_on: [ kitethere-api ]
+    env_file: .env
+    networks: [ kite-net ]
+    ports: [ "3000:3000" ]
+
+
+networks:
+    kite-net:
+        driver: bridge

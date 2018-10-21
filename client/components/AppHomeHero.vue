@@ -114,7 +114,7 @@ export default {
   .hero__controls {
     margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 20px;
   }
   .hero__controls a {

@@ -50,11 +50,12 @@ export default {
     }
   },
 
-  async asyncData ({ params, env }) {
+  async asyncData ({ params, env, req }) {
 
     try {
 
-      let url = 'http://localhost:3000/api/spots/' + params.id
+      let host = req ? req.headers.host : window.location.host
+      let url = 'http://' + host + '/api/spots/' + params.id
       let response = await axios.get(url)
       return { spot: response.data }
 

@@ -32,11 +32,13 @@ export default {
 
   // the fetch function is called before loading the page
   // its used to fetch data and fill the store
-  async fetch ({ store, params }) {
+  async fetch ({ store, params, req }) {
     
     try {
 
-      let response = await axios.get('http://localhost:3000/api/spots') 
+      let host = req ? req.headers.host : window.location.host
+      let url = 'http://' + host + '/api/spots'
+      let response = await axios.get(url) 
       await store.commit('search/setSpots', response.data)
 
   } catch (err) {

@@ -1,28 +1,17 @@
 <template>
   <div class="hero">
-
-    <img class="hero__swoosh" src="@/assets/content-swoosh.svg">
-    <img class="hero__img" src="@/assets/cropped.jpg" alt="">
-
-    <div class="hero__content">
-
-      <div class="hero__message">
-        <h1 class="hero__title">Kite Spot Repository</h1>
-        <p>KiteThere is mapping out the globe, one spot at a time.</p>
-
-        <div class="hero__controls">
-          <nuxt-link to="/map">
-            <AppHomeHeroButton :icon="faGlobe" :text="'Go To Map'"></AppHomeHeroButton>
-          </nuxt-link>
-
-          <nuxt-link to="/edit">
-            <AppHomeHeroButton :icon="faMapMarkerAlt" :text="'Add A Spot'"></AppHomeHeroButton>
-          </nuxt-link>
-        </div>
-      </div>
-
+    <div class="hero__image">
+      <img class="hero__img" :src="kitethere_hero_image">
     </div>
 
+    <img class="hero__content-swoosh" src="@/assets/content-swoosh.svg">
+
+    <div class="hero__message">
+      <div class="hero__title">Kite Spot Repository</div>
+      <div class="hero__body">Don't get caught on the beach with your lines down. Check out the map and read up on the spot before you go. Add your favorite spot to the site.</div>
+      <AppHomeHeroButton :icon="faGlobe" :text="'Map'"></AppHomeHeroButton>
+      <AppHomeHeroButton :icon="faMapMarkerAlt" :text="'Add Spot'"></AppHomeHeroButton>
+    </div>
   </div>
 </template>
 
@@ -36,90 +25,124 @@ export default {
   computed: {
     faGlobe () { return faGlobe },
     faMapMarkerAlt () { return faMapMarkerAlt }
+  },
+  data () {
+    return {
+      kitethere_hero_image: 'https://res.cloudinary.com/docvozwpw/image/upload/kitethere-hero-image.jpg'
+    }
   }
 }
 </script>
 
 <style>
+
 .hero {
-  --hero-height: 700px;
   display: grid;
   grid-template-columns: var(--layout);
-  grid-template-rows: var(--hero-height);
+  grid-template-rows: 700px;
 }
-.hero__content {
-  z-index: 2;
-  grid-column: 2;
-  display: grid;
-  grid-template-columns: 1;
-  grid-template-rows: var(--hero-height);
+
+.hero__image {
+  grid-row: 1;
+  grid-column: 2 / -1;
+  overflow: hidden;
 }
-.hero__message {
-  color: rgb(36, 50, 67);
-  align-self: center;
-  z-index: 2;
-  font-size: 24px;
-  width: 35%;
+
+@media (min-width: 2000px) {
+  .hero__img {
+    width: 100%;
+  }
 }
-.hero__title {
-  font-size: 44px;
+
+@media (min-width: 600px) and (max-width: 2000px) {
+  .hero__img {
+    position: relative;
+    width: 1600px;
+    left: calc((100vw - 2000px) * 0.4)
+  }
 }
-.hero__swoosh {
-  z-index: 1;
+
+@media (max-width: 600px) {
+  .hero {
+    grid-template-rows: calc( 6/6 * 100vw) auto;
+  }
+  .hero__image {
+    grid-column: 1 / -1; 
+  }
+  .hero__img {
+    position: relative;
+    width: 266vw;
+    left: calc(-0.3375 * 266vw);
+  }
 }
-.hero__img {
-  z-index: 0;
-  height: var(--hero-height);
-  object-fit: cover;
-  object-position: 30% top;
+
+.hero__content-swoosh {
+    grid-column: 2;
+    grid-row: 1;
 }
-.hero__controls {
-  margin-top: 20px;
-  display: grid;
-  grid-gap: 20px;
-}
-@media only screen and (min-width: 1000px) {
-  .hero__swoosh {
+
+@media (min-width: 600px) {
+  .hero__content-swoosh {
     transform: scaleY(-1);
-    height: var(--hero-height);
-    position: absolute;
-    left: 25%;
-  }
-  .hero__img {
-    position: absolute;
-    left: 25%;
-    width: 80%;
+    height: 700px;
   }
 }
-@media only screen and (max-width: 1000px) {
-  .hero__swoosh {
-    transform: rotate(-90deg) scaleX(1) scaleY(1);
-    transform-origin: 0 0;
-    position: absolute;
-    left: 00%;
-    top: calc(80px + var(--hero-height));
+
+@media (max-width: 600px) {
+  .hero__content-swoosh {
+    grid-column: 1;
+    transform-origin: 0 50%;
     height: 100vw;
-    width: 500px;
-  }
-  .hero__img {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    object-position: 50% top;
-  }
-  .hero__message {
+    transform: rotate(-90deg)  translate(-50vw, 50vw);
+    justify-self: left;
     align-self: end;
-    width: 100%;
   }
-  .hero__controls {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 20px;
-  }
-  .hero__controls a {
-    text-decoration: none;
+}
+
+.hero__message {
+  display: grid;
+  grid-gap: 10px;
+  grid-column: 2;
+  align-content: start;
+  grid-template-columns: 1fr 1fr;
+}
+
+.hero__title {
+  grid-column: 1 / -1;
+  font-size: 32px;
+}
+
+.hero__body {
+    font-size: 18px;
+    grid-column: 1 / -1;
+}
+
+@media (min-width: 600px) {
+  .hero__message {
+    grid-row: 1;
+    grid-column: 2;
+    width: 500px;
+    z-index: 3;
+    align-self: end;
+    margin-bottom: 40px;
+    background-color: rgba(255, 255, 255, 1);
+    padding: 20px;
+    border-radius: 10px;
   }
 
+  .hero__title {
+  grid-column: 1 / -1;
+  font-size: 50px;
+}
+.hero__body {
+    font-size: 24px;
+
+}
+}
+
+@media (max-width: 600px) {
+  .hero__message {
+        grid-template-columns: 1fr;
+  }
 }
 </style>

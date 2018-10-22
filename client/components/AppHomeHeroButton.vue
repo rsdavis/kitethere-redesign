@@ -15,14 +15,19 @@ export default {
   components: { FontAwesomeIcon }
 }
 </script>
+
+
 <style>
 .hero__button {
+  --hero-button-height: 60px;
+  --hero-button-font-size: 36px;
+
   border: 2px solid var(--dark-blue);
   border-radius: 0px;
   text-decoration: none;
   display: grid;
-  grid-template-columns: 60px 1fr;
-  grid-template-rows: 60px;
+  grid-template-columns: var(--hero-button-height) 1fr;
+  grid-template-rows: var(10px);
   box-sizing: border-box;
   border-radius: 5px;
 }
@@ -30,18 +35,26 @@ export default {
   background-color: var(--dark-blue);
   color: white;
   text-align: center;
-  line-height: 60px;
+  line-height: var(--hero-button-height);
+  height: var(--hero-button-height);
 }
 .hero__button-text {
   text-decoration: none;
   color: var(--dark-blue);
   text-align: center;
-  line-height: 60px;
-  font-size: 36px;
+  line-height: var(--hero-button-height);
+  font-size: var(--hero-button-font-size);
 }
 .hero__button:hover > .hero__button-text {
   background-color: var(--dark-blue);
   color: white;
   cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .hero__button {
+    --hero-button-height: 40px;
+    --hero-button-font-size: 30px;
+  }
 }
 </style>

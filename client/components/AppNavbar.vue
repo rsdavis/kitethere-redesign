@@ -3,8 +3,8 @@
     <div class="nav__content">
       <nuxt-link class="nav__logo" to="/">KiteThere</nuxt-link>
       <nuxt-link class="nav__link" to="/">home</nuxt-link>
-      <div class="nav__link">about</div>
       <nuxt-link class="nav__link" to="/map">map</nuxt-link>
+      <nuxt-link class="nav__link" to="/edit">add</nuxt-link>
     </div>
   </div>
 </template>

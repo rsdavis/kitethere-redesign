@@ -2,8 +2,9 @@
 const express = require('express')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
-const host = process.env.HOST || '127.0.0.1'
+//const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
+const host = '0.0.0.0'
 
 app.set('port', port)
 

@@ -53,6 +53,7 @@ Version.hasMany(Section)
 Version.hasMany(Image)
 
 //sequelize.drop()
-database.sequelize.sync({ force: false })
+//database.sequelize.sync({ force: false })
+database.sequelize.sync()
 
 module.exports = { Spot, Version, Section, Image }

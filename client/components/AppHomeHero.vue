@@ -8,7 +8,7 @@
 
     <div class="hero__message">
       <div class="hero__title">Kite Spot Repository</div>
-      <div class="hero__body">Don't get caught on the beach with your lines down. Check out the map and read up on the spot before you go. Add your favorite spot to the site.</div>
+      <div class="hero__body">Don't get caught on the beach with your lines down. Check out the map and read up on the spot before you go. You can even ddd your favorite spot to the site.</div>
       
       <nuxt-link to="map">
         <AppHomeHeroButton :icon="faGlobe" :text="'Map'"></AppHomeHeroButton>

@@ -4,7 +4,7 @@
 
       <div class="services__item">
         <div class="services__icon">
-          <font-awesome-icon class="services__icon-bg" :icon="faSquare" size="10x"/>
+          <font-awesome-icon class="services__icon-bg" :icon="faSquare" size="8x"/>
           <font-awesome-icon class="services__icon-fg" :icon="faGlobe" size="5x"/>
         </div>
         <div class="services__message">
@@ -15,7 +15,7 @@
 
       <div class="services__item">
         <div class="services__icon">
-          <font-awesome-icon class="services__icon-bg" :icon="faSquare" size="10x"/>
+          <font-awesome-icon class="services__icon-bg" :icon="faSquare" size="8x"/>
           <font-awesome-icon class="services__icon-fg" :icon="faMapMarkerAlt" size="5x"/>
         </div>
         <div class="services__message">
@@ -26,7 +26,7 @@
 
       <div class="services__item">
         <div class="services__icon">
-          <font-awesome-icon class="services__icon-bg" :icon="faSquare" size="10x"/>
+          <font-awesome-icon class="services__icon-bg" :icon="faSquare" size="8x"/>
           <font-awesome-icon class="services__icon-fg" :icon="faPencilAlt" size="5x"/>
         </div>
         <div class="services__message">
@@ -37,7 +37,7 @@
 
       <div class="services__item">
         <div class="services__icon">
-          <font-awesome-icon class="services__icon-bg" :icon="faSquare" size="10x"/>
+          <font-awesome-icon class="services__icon-bg" :icon="faSquare" size="8x"/>
           <font-awesome-icon class="services__icon-fg" :icon="faImage" size="5x"/>
         </div>
         <div class="services__message">

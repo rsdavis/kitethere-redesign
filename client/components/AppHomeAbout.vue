@@ -1,12 +1,16 @@
 <template>
   <div class="about">
     <div class="about__content">
-      <img class="about__img" src="http://via.placeholder.com/600x600" alt="">
+      
+      <nuxt-link to="map">
+        <img class="about__img" src="https://res.cloudinary.com/docvozwpw/image/upload/c_scale,w_609/v1541205966/map_snap.png" alt="">
+      </nuxt-link>
+      
       <div class="about__message">
         <p>KiteThere is a social site focused on gathering local knowledge about kiteboarding spots around the world!</p>
         <p>How many times have you zommed and panned around with Google satellite to scout for potential kiting locations, yet you still don't have much information. How do I get there? Can I park for free? Is this a popular spot? Where's a good place to launch? What should I watch out for? Can I even KiteThere?!</p>
         <p>KiteThere is finding the answers to these questions from the local expects who kite these spots regularly.</p>
-        <p>Get started by adding your favorite spot to the list!</p>
+        <p>Get started by adding your favorite spot to the map!</p>
       </div>
     </div>
   </div>
@@ -22,7 +26,7 @@
   grid-column: 2;
   padding: 100px 0 100px 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 3fr 4fr;
   grid-gap: 40px;
 }
 .about__img {
@@ -48,7 +52,7 @@
   }
   .about__message {
     text-align: left;
-    font-size: 24px;
+    font-size: 20px;
   }
 }
 </style>

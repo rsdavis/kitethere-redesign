@@ -43,6 +43,15 @@ import AppSpotLightBox from '@/components/AppSpotLightBox.vue'
 
 export default {
 
+  head() {
+    return {
+      title: 'KiteThere - ' + this.spot.current.name,
+      meta: [
+        { hid: 'description', name: 'description', content: 'Kite Spot Repository' }
+      ]
+    }
+  },
+
   data () {
     return {
       lightboxActive: false,
@@ -55,7 +64,7 @@ export default {
     try {
 
       let host = req ? req.headers.host : window.location.host
-      let url = 'http://' + host + '/api/spots/' + params.id
+      let url = 'https://' + host + '/api/spots/' + params.id
       let response = await axios.get(url)
       return { spot: response.data }
 

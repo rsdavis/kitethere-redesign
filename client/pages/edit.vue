@@ -115,6 +115,16 @@ import Vue from 'vue'
 import axios from 'axios'
 
 export default {
+
+  head() {
+    return {
+      title: 'KiteThere - Add A Spot',
+      meta: [
+        { hid: 'description', name: 'description', content: 'Kite Spot Repository' }
+      ]
+    }
+  },
+
   components: { Panel, FontAwesomeIcon },
   mixins: [ mixinUploader ],
   data () {

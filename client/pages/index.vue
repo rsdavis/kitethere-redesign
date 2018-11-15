@@ -21,6 +21,15 @@ export default {
         AppHomeAbout, 
         AppHomeServices, 
         AppHomeFooter 
+    },
+
+    head() {
+      return {
+        title: 'KiteThere',
+        meta: [
+          { hid: 'description', name: 'description', content: 'Kite Spot Repository' }
+        ]
+      }
     }
 }
 </script>

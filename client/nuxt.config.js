@@ -39,10 +39,10 @@ module.exports = {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/proxy'
-    // Doc: https://buefy.github.io/#/documentation
-    //'nuxt-buefy'
+    '@nuxtjs/proxy',
+    ['@nuxtjs/google-analytics', {
+        id: 'UA-90643542-2'
+    }]
   ],
 
   proxy: {

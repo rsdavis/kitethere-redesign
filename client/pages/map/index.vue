@@ -11,7 +11,9 @@
       </div>
 
       <div class="search__item" v-if="this.mapSqueezed">
-        <AppSearchPanelItem :spot="selectedSpot"></AppSearchPanelItem>
+        <nuxt-link class="panel__link"  :to="'/spots/' + selectedSpot.id  ">
+          <AppSearchPanelItem :spot="selectedSpot"></AppSearchPanelItem>
+        </nuxt-link>
       </div>
 
     </div>
@@ -30,6 +32,15 @@ export default {
 
   components: { AppSearchMap, AppSearchPanel, AppSearchPanelItem },
 
+  head() {
+    return {
+      title: 'KiteThere - Map',
+      meta: [
+        { hid: 'description', name: 'description', content: 'Kite Spot Repository' }
+      ]
+    }
+  },
+
   // the fetch function is called before loading the page
   // its used to fetch data and fill the store
   async fetch ({ store, params, req }) {
@@ -37,7 +48,7 @@ export default {
     try {
 
       let host = req ? req.headers.host : window.location.host
-      let url = 'http://' + host + '/api/spots'
+      let url = 'https://' + host + '/api/spots'
       let response = await axios.get(url) 
       await store.commit('search/setSpots', response.data)
 

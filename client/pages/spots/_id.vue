@@ -161,9 +161,6 @@ export default {
   padding-top: 15px;
 }
 
-.spot__hero {
-}
-
 .spot__name {
   font-size: 42px;
 }

@@ -20,6 +20,7 @@ Server.prototype.setup = function (settings) {
     
         this.server.use('/api', require('./routers/spotsRouter.js'))
         this.server.use('/api', require('./routers/authRouter.js'))
+        this.server.use('/api', require('./routers/sitemapRouter.js'))
 
         this.server.use(require('./handlers/errorHandler.js'))
         

@@ -36,7 +36,7 @@ export default {
     return {
       title: 'KiteThere - Map',
       meta: [
-        { hid: 'description', name: 'description', content: 'Kite Spot Repository' }
+        { hid: 'description', name: 'description', content: 'KiteThere is a social site focused on gathering local knowledge about kiteboarding spots around the world!' }
       ]
     }
   },

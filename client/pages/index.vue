@@ -27,7 +27,8 @@ export default {
       return {
         title: 'KiteThere',
         meta: [
-          { hid: 'description', name: 'description', content: 'Kite Spot Repository' }
+          { hid: 'description', name: 'description', content: 'Kite Spot Repository' },
+          { hid: 'google-site-verification', name: 'google-site-verification', content: '9g6fsjaBmN7zTKTZqEiX6iSNA6whdwTT7MfB5fzblEk'}
         ]
       }
     }

@@ -344,8 +344,6 @@ export default {
   grid-template-columns: 1fr 1fr;
 }
 
-
-
 .edit-location__coordinates {
   display: grid;
   grid-gap: 10px;
@@ -357,10 +355,6 @@ export default {
   grid-column: 1;
   font-size: 18px;
   line-height: 30px;
-}
-
-
-.edit-info {
 }
 
 .edit-info__label {

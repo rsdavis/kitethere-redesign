@@ -2,7 +2,7 @@
   <div class="search">
     <div class="search__content">
 
-      <div class="search__map" id="search__map">
+      <div class="search__map" :class="{'search__map--squeezed': mapSqueezed}">
         <AppSearchMap></AppSearchMap>
       </div>
 
@@ -47,8 +47,10 @@ export default {
     
     try {
 
+      let protocol = req ? req.protocol + ':' : window.location.protocol
       let host = req ? req.headers.host : window.location.host
-      let url = 'https://' + host + '/api/spots'
+      let url = protocol + '//' + host + '/api/spots'
+
       let response = await axios.get(url) 
       await store.commit('search/setSpots', response.data)
 
@@ -78,22 +80,11 @@ export default {
 
   },
 
-  watch: {
-    'mapSqueezed' (squeezed) { this.switchSqueezed(squeezed) }
-  },
-
   methods: {
 
     mediaListener (query) {
       if (query.matches) this.mobile = true
       else this.mobile = false
-    },
-
-    switchSqueezed (squeezed) {
-      console.log('switch squeezed')
-      var element = document.getElementById("search__map")
-      if (squeezed) element.classList.add("search__map--squeezed")
-      else element.classList.remove("search__map--squeezed")
     }
 
   }

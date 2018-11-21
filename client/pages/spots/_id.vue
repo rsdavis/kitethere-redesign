@@ -55,7 +55,8 @@ export default {
   data () {
     return {
       lightboxActive: false,
-      lightboxInit: 0
+      lightboxInit: 0,
+      mobile: false
     }
   },
 
@@ -63,8 +64,9 @@ export default {
 
     try {
 
+      let protocol = req ? req.protocol + ':' : window.location.protocol
       let host = req ? req.headers.host : window.location.host
-      let url = 'https://' + host + '/api/spots/' + params.id
+      let url = protocol + '//' + host + '/api/spots/' + params.id
       let response = await axios.get(url)
       return { spot: response.data }
 
@@ -78,6 +80,10 @@ export default {
 
   mounted () {
     googleMapsApi().then(this.initMap)
+
+    var mediaQuery = window.matchMedia("(max-width: 1000px)")
+    mediaQuery.addListener(this.mediaListener)
+    this.mediaListener(mediaQuery)
   },
 
   computed: {
@@ -124,6 +130,11 @@ export default {
     onClickImage (ndx) {
       this.lightboxInit = ndx
       this.lightboxActive = true
+    },
+
+    mediaListener (query) {
+      if (query.matches) this.mobile = true
+      else this.mobile = false
     }
 
   }
@@ -141,6 +152,7 @@ export default {
   grid-template-columns: 400px 1fr;
   grid-gap: 20px;
 }
+
 .spot__map {
   position: sticky;
   top: 80px;
@@ -148,6 +160,7 @@ export default {
   height: calc(100vh - 80px);
   background-color: rgba(36, 50, 67, 0.1);
 }
+
 #spot-map {
   margin: 25px auto 0 auto;
   height: 300px;
@@ -192,5 +205,22 @@ export default {
 .spot__section-body {
   margin: 10px 0 0 15px;
   font-size: 20px;
+}
+
+@media only screen and (min-width: 1000px) {
+
+}
+
+@media only screen and (max-width: 1000px) {
+  .spot__map {
+    grid-row: 2;
+    height: 350px;
+  }
+  #spot-map {
+    width: 90%;
+  }
+  .spot__content {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

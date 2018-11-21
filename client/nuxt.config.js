@@ -47,6 +47,7 @@ module.exports = {
 
   proxy: {
     '/api': 'http://localhost:8000'
+    //'/api': 'https://www.kitethere.com'
   },
   /*
   ** Axios module configuration
